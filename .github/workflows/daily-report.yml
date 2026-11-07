@@ -22,7 +22,7 @@ jobs:
       - name: Download and validate market data
         run: python scripts/check_market.py
       - name: Build report
-        run: python scripts/build_report.py
+        run: python scripts/build_report.py --only-new-session
       - name: Update economic headlines
         continue-on-error: true
         run: python scripts/fetch_news.py
@@ -30,7 +30,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add web/data web/vn30.json web/reports web/news.json
+          if ! git diff --quiet -- web/vn30.json; then
+            git add web/data web/vn30.json web/reports
+          fi
+          git add web/news.json
           if ! git diff --cached --quiet; then
             git commit -m "Update daily market report"
             git push

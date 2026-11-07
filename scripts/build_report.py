@@ -1,4 +1,5 @@
 """Build a consistent VN30 snapshot from validated daily bars."""
+import argparse
 import datetime as dt
 import json
 from pathlib import Path
@@ -7,7 +8,7 @@ from statistics import mean
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "web" / "data"
 
-def build():
+def build(only_new_session=False):
     coverage = json.loads((DATA / "coverage.json").read_text())
     results = coverage["results"]
     if len(results) != 31 or any(row["status"] != "ok" for row in results):
@@ -24,6 +25,18 @@ def build():
         raise ValueError("Download snapshot is older than one day")
     if len(benchmark["t"]) < 51:
         raise ValueError("Insufficient benchmark history")
+    market_timezone = dt.timezone(dt.timedelta(hours=7))
+    session = dt.datetime.fromtimestamp(benchmark["t"][-1], market_timezone).date()
+    if session > retrieved.astimezone(market_timezone).date():
+        raise ValueError("Market session is later than retrieval")
+    output = ROOT / "web" / "vn30.json"
+    if output.exists():
+        published = dt.date.fromisoformat(json.loads(output.read_text())["date"])
+        if session < published:
+            raise ValueError("Market source returned a session older than the published report")
+        if only_new_session and session == published:
+            print(f"No new market session since {published}; keeping the published report")
+            return
     rows = []
     for item in results:
         if item["symbol"] == "VNINDEX":
@@ -55,7 +68,7 @@ def build():
             trend=close[-1] > mean(close[-50:]) and mean(close[-20:]) > mean(close[-50:])
         ))
     report = dict(
-        date=dt.datetime.fromtimestamp(benchmark["t"][-1], dt.timezone(dt.timedelta(hours=7))).date().isoformat(),
+        date=session.isoformat(),
         generatedAt=coverage["retrievedAt"], ruleVersion="draft-1",
         index=benchmark["c"][-1], indexMa50=mean(benchmark["c"][-50:]),
         breadth=sum(row["close"] > row["ma50"] for row in rows),
@@ -68,7 +81,6 @@ def build():
         if profile["publishedAt"] <= report["date"]
     }
     report["fundamentalsNote"] = "Collected during report generation; review date may follow the price session."
-    output = ROOT / "web" / "vn30.json"
     temporary = output.with_suffix(".tmp")
     temporary.write_text(json.dumps(report, ensure_ascii=False, indent=2))
     temporary.replace(output)
@@ -85,4 +97,6 @@ def build():
     print(f"Built {len(rows)} stocks; breadth {report['breadth']}/30")
 
 if __name__ == "__main__":
-    build()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--only-new-session", action="store_true")
+    build(only_new_session=parser.parse_args().only_new_session)

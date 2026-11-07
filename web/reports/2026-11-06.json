@@ -22005,6 +22005,182 @@
         "An toàn vốn và thuyết minh rủi ro",
         "Đối chiếu báo cáo tài chính gốc"
       ]
+    },
+    "HPG": {
+      "company": "Tập đoàn Hòa Phát",
+      "sector": "Thép",
+      "period": "9 tháng/2026",
+      "publishedAt": "2026-10-29",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://www.hoaphat.com.vn/tin-tuc/sau-9-thang-hoa-phat-dat-23-746-ty-dong-loi-nhuan-sau-thue-vuot-8-ke-hoach-nam.html",
+      "facts": [
+        {
+          "label": "Doanh thu 9 tháng",
+          "value": "171.539 tỷ đồng (+54%)"
+        },
+        {
+          "label": "LNST 9 tháng",
+          "value": "23.746 tỷ đồng (+104%)"
+        },
+        {
+          "label": "LNST quý III",
+          "value": "8.265 tỷ đồng (+106%)"
+        },
+        {
+          "label": "Tỷ trọng lợi nhuận từ thép",
+          "value": "77%"
+        }
+      ],
+      "assessment": "Doanh thu và lợi nhuận tăng theo công bố. Chưa đủ bằng chứng đánh giá an toàn tài chính hoặc giá mua hợp lý.",
+      "missing": [
+        "Dòng tiền kinh doanh và chi đầu tư",
+        "Dư nợ, lịch đáo hạn và khả năng trả lãi",
+        "Tách khoản lợi nhuận không thường xuyên",
+        "Định giá và chuỗi số liệu nhiều quý"
+      ]
+    },
+    "FPT": {
+      "company": "Tập đoàn FPT",
+      "sector": "Công nghệ",
+      "period": "9 tháng/2026",
+      "publishedAt": "2026-10-21",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://fpt.com/vi/tin-tuc/9-thang-doanh-thu-va-loi-nhuan-truoc-thue-cua-fpt-tang-12-4-va-17-0",
+      "facts": [
+        {
+          "label": "Doanh thu 9 tháng",
+          "value": "40.023 tỷ đồng (+12,4%)"
+        },
+        {
+          "label": "LNTT 9 tháng",
+          "value": "8.770 tỷ đồng (+17%)"
+        },
+        {
+          "label": "Doanh thu ký mới CNTT nước ngoài",
+          "value": "36.137 tỷ đồng (+23,1%)"
+        }
+      ],
+      "assessment": "Tăng trưởng trên cơ sở so sánh đã điều chỉnh. Từ 2026, FPT Telecom được ghi nhận theo phương pháp vốn chủ sở hữu. Không so trực tiếp doanh thu với số hợp nhất cũ.",
+      "missing": [
+        "Dòng tiền kinh doanh và chất lượng khoản phải thu",
+        "Tiền, nợ vay và nghĩa vụ đầu tư",
+        "Đối chiếu báo cáo tài chính và thuyết minh",
+        "Định giá trên EPS có kỳ tính phù hợp"
+      ]
+    },
+    "MSN": {
+      "company": "Tập đoàn Masan",
+      "sector": "Tiêu dùng và bán lẻ",
+      "period": "9 tháng/2026",
+      "publishedAt": "2026-10-22",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://www.masangroup.com/vi/news/press-releases/quy-iii-2026-loi-nhuan-masan-tang-hon-gap-doi-vuot-ke-hoach-co-so-ca-nam-chi-sau-9-thang/",
+      "facts": [
+        {
+          "label": "Doanh thu thuần 9 tháng",
+          "value": "89.118 tỷ đồng (+52,7%)"
+        },
+        {
+          "label": "LNST thuộc cổ đông công ty mẹ 9 tháng",
+          "value": "8.042 tỷ đồng (gấp 3,1 lần cùng kỳ)"
+        },
+        {
+          "label": "Dòng tiền tự do 12 tháng đến cuối quý III",
+          "value": "10.794 tỷ đồng theo cách tính của doanh nghiệp"
+        }
+      ],
+      "assessment": "Số liệu quản trị chưa kiểm toán ghi nhận doanh thu và lợi nhuận tăng. Cần tách ảnh hưởng của thay đổi tỷ lệ sở hữu và đóng góp của từng mảng trước khi đánh giá khả năng duy trì tăng trưởng.",
+      "missing": [
+        "Nợ vay và lịch đáo hạn tại công ty mẹ",
+        "Đối chiếu dòng tiền tự do với báo cáo lưu chuyển tiền tệ",
+        "Định giá theo từng mảng"
+      ]
+    },
+    "VPB": {
+      "company": "VPBank",
+      "sector": "Ngân hàng",
+      "period": "9 tháng/2026",
+      "publishedAt": "2026-10-19",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://www.vpbank.com.vn/tin-tuc/thong-cao-bao-chi/2026/vpbank-dat-loi-nhuan-gan-30000-ty-dong-sau-9-thang-tang-gan-47-so-voi-cung-ky-nam-ngoai",
+      "facts": [
+        {
+          "label": "LNTT hợp nhất 9 tháng",
+          "value": "Gần 30.000 tỷ đồng (tăng gần 47% cùng kỳ)"
+        },
+        {
+          "label": "Tỷ lệ nợ xấu riêng lẻ",
+          "value": "Quanh 2% theo công bố"
+        },
+        {
+          "label": "Tỷ lệ nợ xấu hợp nhất",
+          "value": "Dưới 3% theo công bố"
+        }
+      ],
+      "assessment": "Lợi nhuận tăng theo công bố. Đánh giá chất lượng tài sản cần xem nợ xấu hợp nhất cùng mức dự phòng và diễn biến qua nhiều quý.",
+      "missing": [
+        "Tỷ lệ bao phủ nợ xấu và chuỗi chi phí dự phòng",
+        "An toàn vốn và thanh khoản",
+        "Đối chiếu số liệu với báo cáo tài chính hợp nhất"
+      ]
+    },
+    "MCH": {
+      "company": "Masan Consumer",
+      "sector": "Hàng tiêu dùng",
+      "period": "Quý III và 9 tháng/2026",
+      "publishedAt": "2026-10-30",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://www.masangroup.com/vi/news/masan-news/masan-consumer-tang-truong-nhanh-nhat-ba-nam-khi-thuong-hieu-va-mang-luoi-phan-phoi-cung-phat-huy-loi-the/",
+      "facts": [
+        {
+          "label": "Doanh thu quý III",
+          "value": "8.743 tỷ đồng (+16,3% cùng kỳ)"
+        },
+        {
+          "label": "Doanh thu 9 tháng",
+          "value": "24.380 tỷ đồng (+14,6% cùng kỳ)"
+        },
+        {
+          "label": "LNST trước lợi ích cổ đông thiểu số quý III",
+          "value": "1.938 tỷ đồng (+14,1% cùng kỳ)"
+        }
+      ],
+      "assessment": "Doanh thu và lợi nhuận quý III tăng theo công bố. Cần kiểm tra dòng tiền và vốn lưu động để đánh giá chất lượng tăng trưởng.",
+      "missing": [
+        "Dòng tiền kinh doanh và thay đổi tồn kho, phải thu",
+        "Nợ vay và khả năng thanh toán",
+        "Đối chiếu báo cáo hợp nhất và định giá"
+      ]
+    },
+    "MWG": {
+      "company": "Đầu tư Thế Giới Di Động",
+      "sector": "Bán lẻ",
+      "period": "9 tháng/2026",
+      "publishedAt": "2026-10-30",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://mwg.vn/tin-tuc/mwg-tiep-tuc-vao-top-500-doanh-nghiep-loi-nhuan-tot-nhat-viet-nam-5002679",
+      "facts": [
+        {
+          "label": "Doanh thu thuần 9 tháng theo biểu đồ công bố",
+          "value": "147.953 tỷ đồng (+30% cùng kỳ)"
+        },
+        {
+          "label": "Tiến độ kế hoạch doanh thu năm",
+          "value": "80% theo biểu đồ công bố"
+        }
+      ],
+      "assessment": "Biểu đồ ghi rõ kỳ 9 tháng, trong khi phần chữ của bài mô tả mốc đầu tháng 9. Số liệu ở đây theo nhãn kỳ trên biểu đồ và cần đối chiếu với báo cáo tài chính.",
+      "missing": [
+        "Lợi nhuận và biên lợi nhuận theo chuỗi bán lẻ",
+        "Dòng tiền, tồn kho và nợ vay",
+        "Đối chiếu báo cáo tài chính hợp nhất quý III"
+      ]
     }
   },
   "fundamentalsNote": "Collected during report generation; review date may follow the price session."

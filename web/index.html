@@ -19,6 +19,11 @@
 <p id="session" role="status">Đang đọc dữ liệu phiên…</p>
 <span class="badge" id="status">Chờ dữ liệu</span>
 </header>
+<article style="margin-top:20px">
+<h2>Tóm tắt sàng lọc cuối phiên</h2>
+<dl id="screening-summary"></dl>
+<p id="screening-note"></p>
+</article>
 <div class="grid">
 <article>
 <h2>Thị trường chung</h2>
@@ -28,12 +33,18 @@
 </article>
 <article>
 <h2>Cơ bản doanh nghiệp</h2>
+<p><small id="fundamental-coverage"></small></p>
 <div id="fundamental"><p>Chưa có hồ sơ cơ bản đã kiểm chứng cho mã này.</p><p>Cần rà báo cáo tài chính và công bố mới trước khi đánh giá triển vọng hoặc sức khỏe tài chính.</p></div>
 </article>
 <article>
 <h2 id="technical-title">Kỹ thuật</h2>
 <dl id="technical"></dl>
 <p id="technical-note"></p>
+<details>
+<summary>Xem từng điều kiện sàng lọc</summary>
+<dl id="decision-checks"></dl>
+<p><small>Bộ lọc thử nghiệm dựa trên dữ liệu đóng cửa. Điểm vào và mức thoát vẫn cần quy tắc riêng đã kiểm chứng.</small></p>
+</details>
 </article>
 </div>
 <article style="margin-top:20px">
@@ -54,8 +65,14 @@
 <article style="margin-top:20px">
 <h2>Tin kinh tế mới</h2>
 <p id="news-status">Đang tải bản tin…</p>
+<label for="news-topic">Chủ đề </label>
+<select id="news-topic" disabled>
+  <option value="">Tất cả</option>
+  <option value="macro">Vĩ mô và chính sách</option>
+  <option value="market">Thị trường và doanh nghiệp</option>
+</select>
 <ul id="news-list"></ul>
-<small>Các tiêu đề từ nguồn kinh tế. Mức ảnh hưởng đến từng mã cần được rà soát thêm.</small>
+<small>Chủ đề được gợi ý theo từ khóa trong tiêu đề. Mức ảnh hưởng cần được rà soát từ bài gốc.</small>
 </article>
 <footer><small>Nguồn giá Entrade. Phiếu mẫu sử dụng dữ liệu lịch sử và bộ lọc thử nghiệm.</small></footer>
 </main>
@@ -125,7 +142,8 @@ function showFundamental(symbol) {
     return;
   }
   const meta = document.createElement("p");
-  meta.textContent = profile.period + " · Công bố " + profile.publishedAt + " · Rà soát " + profile.reviewedAt;
+  meta.textContent = profile.company + " · " + profile.sector + " · " + profile.period
+    + " · Công bố " + profile.publishedAt + " · Rà soát " + profile.reviewedAt;
   target.append(meta);
   for (const fact of profile.facts) {
     const line = document.createElement("p");
@@ -151,8 +169,21 @@ function showStock(report, stock) {
   document.getElementById("technical").replaceChildren();
   document.getElementById("technical-title").textContent = "Kỹ thuật " + stock.symbol;
   const marketPass = report.index > report.indexMa50;
+  const profile = fundamentals[stock.symbol];
+  const readyForReview = profile && profile.status === "reviewed";
+  document.getElementById("decision-checks").replaceChildren();
+  metrics("decision-checks", [
+    ["VN-Index trên MA50", marketPass ? "Đạt" : "Chưa đạt"],
+    ["Giá cổ phiếu trên MA50", stock.close > stock.ma50 ? "Đạt" : "Chưa đạt"],
+    ["MA20 trên MA50", stock.ma20 > stock.ma50 ? "Đạt" : "Chưa đạt"],
+    ["Hồ sơ cơ bản đã rà soát", readyForReview ? "Đã rà soát" : profile ? "Hồ sơ sơ bộ" : "Chưa có hồ sơ"],
+    ["Điểm vào và mức thoát", "Chưa xác định"]
+  ]);
   document.getElementById("status").textContent =
-    stock.trend && marketPass ? "Chờ xác nhận điểm vào" : "Theo dõi · chưa có tín hiệu mua";
+    !marketPass ? "Theo dõi · thị trường chưa đạt bộ lọc"
+    : !stock.trend ? "Theo dõi · mã chưa đạt bộ lọc xu hướng"
+    : !readyForReview ? "Theo dõi · chưa đủ dữ liệu cơ bản"
+    : "Theo dõi · chờ xác nhận điểm vào";
   metrics("technical", [
     ["Đóng cửa (thang nguồn)", fmt.format(stock.close)],
     ["MA20", fmt.format(stock.ma20)], ["MA50", fmt.format(stock.ma50)],
@@ -169,6 +200,24 @@ async function showUniverse(date = "") {
   if (!response.ok) throw new Error("Thiếu dữ liệu VN30");
   const report = await response.json();
   fundamentals = report.fundamentals || {};
+  const covered = report.stocks.filter(stock => fundamentals[stock.symbol]);
+  const partial = covered.filter(stock => fundamentals[stock.symbol].status === "partial").length;
+  const trending = report.stocks.filter(stock => stock.trend);
+  const marketPass = report.index > report.indexMa50;
+  const passed = marketPass
+    ? trending.filter(stock => fundamentals[stock.symbol]?.status === "reviewed").length
+    : 0;
+  document.getElementById("screening-summary").replaceChildren();
+  metrics("screening-summary", [
+    ["VN-Index trên MA50", marketPass ? "Đạt" : "Chưa đạt"],
+    ["Mã đạt bộ lọc xu hướng riêng", trending.length + "/" + report.stocks.length],
+    ["Mã đạt cả thị trường, xu hướng và hồ sơ", passed + "/" + report.stocks.length]
+  ]);
+  document.getElementById("screening-note").textContent = marketPass
+    ? "Mã vượt bộ lọc cần thêm quy tắc xác nhận điểm vào và thoát."
+    : "Bộ lọc thị trường đang chặn bước xét điểm vào cho toàn rổ.";
+  document.getElementById("fundamental-coverage").textContent =
+    `${covered.length}/${report.stocks.length} mã có hồ sơ · ${partial} hồ sơ sơ bộ`;
   const ageDays = (Date.now() - new Date(report.date + "T00:00:00+07:00").getTime()) / 86400000;
   document.getElementById("freshness").textContent = date
     ? "Bạn đang xem báo cáo đã lưu của phiên " + report.date
@@ -243,22 +292,42 @@ async function showNews() {
     "Tin mới nhất, không thay đổi theo ngày báo cáo · Cập nhật " + new Date(news.updatedAt).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })
     + (Date.now() - new Date(news.updatedAt).getTime() > 3 * 86400000 ? " · Bản tin đã hơn 3 ngày chưa cập nhật." : "");
   const list = document.getElementById("news-list");
-  for (const item of news.items) {
-    const row = document.createElement("li");
-    row.style.marginBottom = "12px";
-    const link = document.createElement("a");
-    link.textContent = item.title;
-    const url = new URL(item.url);
-    if (url.protocol !== "https:" || url.hostname !== "vnexpress.net") continue;
-    link.href = url.href;
-    link.target = "_blank";
-    link.rel = "noopener noreferrer";
-    const time = document.createElement("small");
-    time.textContent = " · " + item.source + " · " + new Date(item.publishedAt).toLocaleString("vi-VN", {timeZone:"Asia/Ho_Chi_Minh"});
-    row.append(link, time);
-    list.append(row);
+  const picker = document.getElementById("news-topic");
+  const topicPatterns = {
+    macro: /lãi suất|tỷ giá|lạm phát|ngân hàng nhà nước|chính sách|thuế quan|\bGDP\b/iu,
+    market: /chứng khoán|cổ phiếu|vn[- ]?index|lợi nhuận|doanh thu|phát hành|cổ tức/iu
+  };
+  const entries = news.items.flatMap(item => {
+    let url;
+    try { url = new URL(item.url); } catch { return []; }
+    return url.protocol === "https:" && url.hostname === "vnexpress.net" ? [{item, url}] : [];
+  });
+  function renderHeadlines() {
+    list.replaceChildren();
+    const pattern = topicPatterns[picker.value];
+    const filtered = entries.filter(({item}) => !pattern || pattern.test(item.title.normalize("NFC")));
+    for (const {item, url} of filtered) {
+      const row = document.createElement("li");
+      row.style.marginBottom = "12px";
+      const link = document.createElement("a");
+      link.textContent = item.title;
+      link.href = url.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      const time = document.createElement("small");
+      time.textContent = " · " + item.source + " · " + new Date(item.publishedAt).toLocaleString("vi-VN", {timeZone:"Asia/Ho_Chi_Minh"});
+      row.append(link, time);
+      list.append(row);
+    }
+    if (!filtered.length) {
+      const empty = document.createElement("li");
+      empty.textContent = picker.value ? "Chưa có tiêu đề khớp chủ đề." : "Nguồn hiện chưa có tin mới.";
+      list.append(empty);
+    }
   }
-  if (!news.items.length) list.textContent = "Nguồn hiện chưa có tin mới trong ba ngày qua.";
+  picker.disabled = false;
+  picker.onchange = renderHeadlines;
+  renderHeadlines();
 }
 showNews().catch(() => {
   document.getElementById("news-status").textContent = "Chưa tải được bản tin.";

@@ -6,7 +6,7 @@ Web tiếng Việt hỗ trợ quan sát VN30, xu hướng VNINDEX, thông tin do
 
 - Có bảng kỹ thuật 30 mã, MA20/50, ATR14, khối lượng tương đối và sức mạnh tương đối so với VNINDEX.
 - Có báo cáo theo ngày, nguồn dữ liệu và cảnh báo dữ liệu cũ.
-- Hồ sơ cơ bản mới có một phần TCB; các mã khác hiển thị thiếu dữ liệu.
+- Hồ sơ cơ bản mới có một phần TCB, FPT, HPG, MSN, VPB, MCH và MWG; các mã khác hiển thị thiếu dữ liệu.
 - Tin kinh tế là tiêu đề và liên kết nguồn; chưa có phân tích tác động tự động.
 - Chưa kiểm chứng chiến lược, chưa có kết quả backtest hay cam kết tỷ lệ thắng.
 
@@ -41,4 +41,4 @@ Danh sách VN30 lấy từ SSI tại thời điểm tải, giá từ Entrade, ti
 
 Giá đang giữ nguyên đơn vị nguồn; việc điều chỉnh cổ tức, chia tách và lịch sử thành phần VN30 chưa được đối soát. Không dùng dữ liệu hiện tại để tuyên bố kết quả chiến lược lịch sử. Báo cáo cùng ngày được thay thế khi chạy lại.
 
-Supabase, AI, thông báo gửi ra ngoài và tự động cập nhật hồ sơ cơ bản chưa được tích hợp. Website có thể chạy bản quan sát hiện tại mà không cần các khóa dịch vụ này.
+Người dùng đã chọn chỉ xem báo cáo trên web, không cần email hoặc Telegram. Supabase, AI và tự động cập nhật hồ sơ cơ bản chưa được tích hợp. Website có thể chạy bản quan sát hiện tại mà không cần các khóa dịch vụ này.

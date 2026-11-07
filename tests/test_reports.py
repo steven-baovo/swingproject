@@ -54,6 +54,16 @@ class ReportTests(unittest.TestCase):
         self.coverage(lambda data: data.update(retrievedAt="2000-01-01T00:00:00+00:00"))
         self.assert_rejected_without_publish()
 
+    def test_scheduled_repeat_preserves_published_snapshot(self):
+        path = self.root / "web/vn30.json"
+        before = path.read_bytes()
+        date = json.loads(before)["date"]
+        archive = self.root / "web/reports" / (date + ".json")
+        archived = archive.read_bytes()
+        builder.build(only_new_session=True)
+        self.assertEqual(before, path.read_bytes())
+        self.assertEqual(archived, archive.read_bytes())
+
     def test_success_reproducible_and_archived(self):
         builder.build()
         path = self.root / "web/vn30.json"
