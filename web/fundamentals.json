@@ -1,0 +1,39 @@
+{
+  "TCB": {
+    "company": "Techcombank",
+    "sector": "Ngân hàng",
+    "period": "Quý III/2026",
+    "publishedAt": "2026-10-22",
+    "reviewedAt": "2026-11-07",
+    "status": "partial",
+    "source": "https://techcombank.com/thong-tin/thong-bao/ket-qua-kinh-doanh-quy-3-nam-2026",
+    "facts": [
+      {
+        "label": "Lợi nhuận trước thuế quý III",
+        "value": "10,4 nghìn tỷ đồng"
+      },
+      {
+        "label": "Lợi nhuận trước thuế 9 tháng",
+        "value": "28,9 nghìn tỷ đồng"
+      },
+      {
+        "label": "Tăng trưởng LNTT 9 tháng cùng kỳ",
+        "value": "23,7%"
+      },
+      {
+        "label": "Thu nhập lãi thuần quý III",
+        "value": "11,7 nghìn tỷ đồng"
+      },
+      {
+        "label": "Tăng trưởng thu nhập lãi thuần cùng kỳ",
+        "value": "17,9%"
+      }
+    ],
+    "assessment": "Lợi nhuận và thu nhập lãi thuần tăng theo công bố. Cần đối chiếu chất lượng tài sản trước khi đánh giá sức khỏe tài chính.",
+    "missing": [
+      "Chuỗi nợ xấu và bao phủ nợ xấu theo quý",
+      "An toàn vốn và thuyết minh rủi ro",
+      "Đối chiếu báo cáo tài chính gốc"
+    ]
+  }
+}

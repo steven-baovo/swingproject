@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Swing Project · Theo dõi VN30</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f7f6;color:#142923;font:16px/1.6 system-ui,sans-serif}main{max-width:1050px;margin:auto;padding:40px 20px}header{background:#143f35;color:#fff;border-radius:20px;padding:28px}h1{font-size:clamp(32px,7vw,56px);line-height:1.12;margin:8px 0}h2{margin:0 0 10px;font-size:21px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,275px),1fr));gap:16px;margin-top:20px}article{background:#fff;border:1px solid #dbe6df;border-radius:16px;padding:20px}dl{margin:0}dl div{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid #e4ebe6;padding:6px 0}dd{margin:0;font-weight:650;text-align:right}a{color:#17624c}small{color:#4d645a}.badge{display:inline-block;background:#f8e6ad;color:#302604;padding:4px 12px;border-radius:20px;font-weight:700}footer{margin-top:20px}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div>SWING PROJECT · BẢN THỬ VN30</div>
+<h1>Quan sát VN30</h1>
+<label for="symbol">Mã đang xem </label><select id="symbol" style="padding:8px;border-radius:8px;font:inherit" aria-label="Chọn mã cổ phiếu"></select>
+<p><label for="report-date">Báo cáo </label><select id="report-date" style="padding:8px;font:inherit"><option value="">Mới nhất</option></select></p>
+<p id="freshness" role="status"></p>
+<p id="session" role="status">Đang đọc dữ liệu phiên…</p>
+<span class="badge" id="status">Chờ dữ liệu</span>
+</header>
+<div class="grid">
+<article>
+<h2>Thị trường chung</h2>
+<dl id="market"></dl>
+<p id="market-note"></p>
+<small id="market-breadth"></small>
+</article>
+<article>
+<h2>Cơ bản doanh nghiệp</h2>
+<div id="fundamental"><p>Chưa có hồ sơ cơ bản đã kiểm chứng cho mã này.</p><p>Cần rà báo cáo tài chính và công bố mới trước khi đánh giá triển vọng hoặc sức khỏe tài chính.</p></div>
+</article>
+<article>
+<h2 id="technical-title">Kỹ thuật</h2>
+<dl id="technical"></dl>
+<p id="technical-note"></p>
+</article>
+</div>
+<article style="margin-top:20px">
+<h2 id="chart-title">Diễn biến giá</h2>
+<p><span style="color:#17624c">━ Đóng cửa</span> · <span style="color:#a25a00">━ MA20</span> · <span style="color:#7059aa">━ MA50</span></p>
+<svg id="price-chart" viewBox="0 0 960 320" role="img" aria-label="Biểu đồ giá đóng cửa và trung bình động" style="width:100%;display:block"></svg>
+<p id="chart-note"></p>
+</article>
+<article style="margin-top:20px;overflow:auto">
+<h2>So sánh VN30</h2>
+<p id="breadth">Đang tải toàn rổ…</p>
+<table style="width:100%;text-align:right;border-collapse:collapse">
+<thead><tr><th>Mã</th><th>Đóng cửa*</th><th>MA50*</th><th>Sức mạnh 20 phiên</th><th>Xu hướng</th></tr></thead>
+<tbody id="stocks"></tbody>
+</table>
+<p><small>* Giá theo thang của nguồn. Thành phần là ảnh chụp rổ hiện tại. Bộ lọc xu hướng đang thử nghiệm.</small></p>
+</article>
+<article style="margin-top:20px">
+<h2>Tin kinh tế mới</h2>
+<p id="news-status">Đang tải bản tin…</p>
+<ul id="news-list"></ul>
+<small>Các tiêu đề từ nguồn kinh tế. Mức ảnh hưởng đến từng mã cần được rà soát thêm.</small>
+</article>
+<footer><small>Nguồn giá Entrade. Phiếu mẫu sử dụng dữ liệu lịch sử và bộ lọc thử nghiệm.</small></footer>
+</main>
+<script>
+const fmt = new Intl.NumberFormat("vi-VN", { maximumFractionDigits: 2 });
+function showChart(stock) {
+  const svg = document.getElementById("price-chart");
+  svg.replaceChildren();
+  document.getElementById("chart-title").textContent = "Diễn biến " + stock.symbol;
+  const history = stock.history || [];
+  const note = document.getElementById("chart-note");
+  if (history.length < 2) {
+    note.textContent = "Báo cáo này chưa lưu dữ liệu biểu đồ.";
+    return;
+  }
+  const keys = ["close", "ma20", "ma50"];
+  const values = history.flatMap(point => keys.map(key => point[key]));
+  if (!values.every(Number.isFinite)) {
+    note.textContent = "Dữ liệu biểu đồ không hợp lệ.";
+    return;
+  }
+  const low = Math.min(...values), high = Math.max(...values);
+  const pad = (high - low || high || 1) * .08;
+  const bottom = low - pad, top = high + pad;
+  const x = i => 76 + i / (history.length - 1) * 860;
+  const y = value => 18 + (top - value) / (top - bottom) * 260;
+  function element(tag, attrs, text) {
+    const node = document.createElementNS("http://www.w3.org/2000/svg", tag);
+    for (const [name, value] of Object.entries(attrs)) node.setAttribute(name, value);
+    if (text !== undefined) node.textContent = text;
+    svg.append(node);
+    return node;
+  }
+  for (let i = 0; i <= 4; i++) {
+    const value = bottom + (top - bottom) * i / 4;
+    element("line", {x1:76, x2:936, y1:y(value), y2:y(value), stroke:"#e4ebe6"});
+    element("text", {x:66, y:y(value)+5, "text-anchor":"end", "font-size":14, fill:"#4d645a"}, fmt.format(value));
+  }
+  keys.forEach((key, index) => element("polyline", {
+    points:history.map((point, i) => `${x(i)},${y(point[key])}`).join(" "),
+    fill:"none", stroke:["#17624c", "#a25a00", "#7059aa"][index],
+    "stroke-width":key === "close" ? 2.5 : 1.7
+  }));
+  [0, Math.floor((history.length-1)/2), history.length-1].forEach(i =>
+    element("text", {x:x(i), y:308, "text-anchor":i === 0 ? "start" : i === history.length-1 ? "end" : "middle", "font-size":14, fill:"#4d645a"}, history[i].date));
+  note.textContent = `${history.length} phiên đến ${history[history.length-1].date}. Giá theo thang nguồn; dữ liệu điều chỉnh cổ tức và chia tách chưa được đối soát.`;
+}
+function metrics(id, entries) {
+  const list = document.getElementById(id);
+  for (const [label, value] of entries) {
+    const row = document.createElement("div");
+    const term = document.createElement("dt");
+    const detail = document.createElement("dd");
+    term.textContent = label;
+    detail.textContent = value;
+    row.append(term, detail);
+    list.append(row);
+  }
+}
+let fundamentals = {};
+function showFundamental(symbol) {
+  const target = document.getElementById("fundamental");
+  target.replaceChildren();
+  const profile = fundamentals[symbol];
+  if (!profile) {
+    target.textContent = "Chưa có hồ sơ cơ bản đã kiểm chứng cho mã này.";
+    return;
+  }
+  const meta = document.createElement("p");
+  meta.textContent = profile.period + " · Công bố " + profile.publishedAt + " · Rà soát " + profile.reviewedAt;
+  target.append(meta);
+  for (const fact of profile.facts) {
+    const line = document.createElement("p");
+    line.textContent = fact.label + " — " + fact.value;
+    target.append(line);
+  }
+  const assessment = document.createElement("p");
+  assessment.textContent = profile.assessment;
+  target.append(assessment);
+  const missing = document.createElement("p");
+  missing.textContent = "Còn thiếu · " + profile.missing.join(". ");
+  target.append(missing);
+  const source = document.createElement("a");
+  source.href = profile.source;
+  source.textContent = "Đọc công bố doanh nghiệp";
+  source.target = "_blank";
+  source.rel = "noopener noreferrer";
+  target.append(source);
+}
+function showStock(report, stock) {
+  showChart(stock);
+  showFundamental(stock.symbol);
+  document.getElementById("technical").replaceChildren();
+  document.getElementById("technical-title").textContent = "Kỹ thuật " + stock.symbol;
+  const marketPass = report.index > report.indexMa50;
+  document.getElementById("status").textContent =
+    stock.trend && marketPass ? "Chờ xác nhận điểm vào" : "Theo dõi · chưa có tín hiệu mua";
+  metrics("technical", [
+    ["Đóng cửa (thang nguồn)", fmt.format(stock.close)],
+    ["MA20", fmt.format(stock.ma20)], ["MA50", fmt.format(stock.ma50)],
+    ["So với chỉ số (20 phiên)", fmt.format(stock.relative) + " đpt"],
+    ["Khối lượng / bình quân", stock.volumeRatio === null ? "Thiếu dữ liệu" : fmt.format(stock.volumeRatio) + " lần"],
+    ["ATR14", fmt.format(stock.atr)]
+  ]);
+  document.getElementById("technical-note").textContent = stock.trend
+    ? "Đạt bộ lọc xu hướng. Cần đánh giá cơ bản, nhịp điều chỉnh và tín hiệu hồi."
+    : "Bộ lọc yêu cầu giá đóng cửa và MA20 cùng nằm trên MA50.";
+}
+async function showUniverse(date = "") {
+  const response = await fetch(date ? "./reports/" + date + ".json" : "./vn30.json");
+  if (!response.ok) throw new Error("Thiếu dữ liệu VN30");
+  const report = await response.json();
+  fundamentals = report.fundamentals || {};
+  const ageDays = (Date.now() - new Date(report.date + "T00:00:00+07:00").getTime()) / 86400000;
+  document.getElementById("freshness").textContent = date
+    ? "Bạn đang xem báo cáo đã lưu của phiên " + report.date
+    : ageDays > 4 ? "Dữ liệu đã hơn 4 ngày. Kiểm tra ngày phiên trước khi sử dụng." : "";
+  document.getElementById("stocks").replaceChildren();
+  document.getElementById("market").replaceChildren();
+  metrics("market", [["VN-Index", fmt.format(report.index)], ["MA50", fmt.format(report.indexMa50)]]);
+  document.getElementById("market-note").textContent = report.index > report.indexMa50
+    ? "VN-Index trên MA50." : "VN-Index dưới MA50. Bộ lọc thị trường chưa đạt.";
+  document.getElementById("market-breadth").textContent = report.breadth + "/30 mã trên MA50";
+  document.getElementById("session").textContent = "Dữ liệu đến phiên " + report.date
+    + " · Quy tắc " + report.ruleVersion;
+  const selector = document.getElementById("symbol");
+  const previousSymbol = selector.value;
+  selector.replaceChildren();
+  for (const stock of [...report.stocks].sort((a,b) => a.symbol.localeCompare(b.symbol))) {
+    selector.add(new Option(stock.symbol, stock.symbol));
+  }
+  selector.value = report.stocks.some(stock => stock.symbol === previousSymbol) ? previousSymbol : "TCB";
+  const selectStock = () => showStock(report, report.stocks.find(stock => stock.symbol === selector.value));
+  selector.onchange = selectStock;
+  selectStock();
+
+  document.getElementById("breadth").textContent =
+    `Phiên ${report.date} · ${report.breadth}/30 mã nằm trên MA50`;
+  for (const stock of report.stocks) {
+    const row = document.createElement("tr");
+    for (const value of [stock.symbol, fmt.format(stock.close), fmt.format(stock.ma50),
+      fmt.format(stock.relative) + " đpt", stock.trend ? "Đạt lọc xu hướng" : "Chưa đạt"]) {
+      const cell = document.createElement("td");
+      cell.textContent = value;
+      cell.style.padding = "10px 6px";
+      cell.style.borderBottom = "1px solid #e4ebe6";
+      row.append(cell);
+    }
+    document.getElementById("stocks").append(row);
+  }
+}
+function reportError() {
+  document.getElementById("status").textContent = "Không tải được báo cáo đã chọn";
+  document.getElementById("session").textContent = "Phần dưới có thể thuộc phiên trước đó.";
+}
+async function loadHistory() {
+  const response = await fetch("./reports/index.json");
+  if (!response.ok) return;
+  const dates = await response.json();
+  const picker = document.getElementById("report-date");
+  for (const date of dates) {
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date)) picker.add(new Option(date, date));
+  }
+  picker.onchange = async () => {
+    picker.disabled = true;
+    document.getElementById("symbol").disabled = true;
+    try { await showUniverse(picker.value); } catch { reportError(); }
+    finally {
+      picker.disabled = false;
+      document.getElementById("symbol").disabled = false;
+    }
+  };
+}
+loadHistory().catch(() => {});
+showUniverse().catch(() => {
+  document.getElementById("breadth").textContent = "Chưa tải được toàn rổ VN30.";
+  document.getElementById("session").textContent = "Không tải được báo cáo.";
+  document.getElementById("status").textContent = "Thiếu dữ liệu";
+});
+async function showNews() {
+  const response = await fetch("./news.json");
+  if (!response.ok) throw new Error("Thiếu bản tin");
+  const news = await response.json();
+  document.getElementById("news-status").textContent =
+    "Tin mới nhất, không thay đổi theo ngày báo cáo · Cập nhật " + new Date(news.updatedAt).toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })
+    + (Date.now() - new Date(news.updatedAt).getTime() > 3 * 86400000 ? " · Bản tin đã hơn 3 ngày chưa cập nhật." : "");
+  const list = document.getElementById("news-list");
+  for (const item of news.items) {
+    const row = document.createElement("li");
+    row.style.marginBottom = "12px";
+    const link = document.createElement("a");
+    link.textContent = item.title;
+    const url = new URL(item.url);
+    if (url.protocol !== "https:" || url.hostname !== "vnexpress.net") continue;
+    link.href = url.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    const time = document.createElement("small");
+    time.textContent = " · " + item.source + " · " + new Date(item.publishedAt).toLocaleString("vi-VN", {timeZone:"Asia/Ho_Chi_Minh"});
+    row.append(link, time);
+    list.append(row);
+  }
+  if (!news.items.length) list.textContent = "Nguồn hiện chưa có tin mới trong ba ngày qua.";
+}
+showNews().catch(() => {
+  document.getElementById("news-status").textContent = "Chưa tải được bản tin.";
+});
+</script>
+</body>
+</html>

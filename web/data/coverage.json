@@ -1,0 +1,193 @@
+{
+  "retrievedAt": "2026-11-06T17:08:58.549016+00:00",
+  "membershipSource": "https://iboard-query.ssi.com.vn/stock/group/VN30",
+  "membershipScope": "current snapshot; historical membership not verified",
+  "results": [
+    {
+      "symbol": "ACB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "BID",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "BSR",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "CTG",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "FPT",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "GAS",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "GVR",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "HDB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "HPG",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "LPB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "MBB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "MCH",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "MSN",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "MWG",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "SAB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "SHB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "SSB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "SSI",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "STB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "TCB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "TCX",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VCB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VHM",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VIB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VIC",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VJC",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VNM",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VPB",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VPL",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VRE",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    },
+    {
+      "symbol": "VNINDEX",
+      "sessions": 204,
+      "lastTimestamp": 1793930400,
+      "status": "ok"
+    }
+  ]
+}
