@@ -77,6 +77,8 @@
 <article style="margin-top:20px">
 <h2>Kiểm tra bộ lọc trên dữ liệu lịch sử</h2>
 <p id="study-status" role="status">Đang tải kết quả mô phỏng…</p>
+<label for="study-holding">Thời gian nắm giữ tối đa</label>
+<select id="study-holding" disabled></select>
 <dl id="study-metrics"></dl>
 <p><small>Mẫu áp thành phần VN30 hiện tại về quá khứ. Giá chưa được đối soát điều chỉnh cổ tức và chia tách. Mô phỏng chưa xét thanh khoản, tỷ trọng vốn hay phân tích cơ bản.</small></p>
 </article>
@@ -342,15 +344,27 @@ async function showStudy() {
   const response = await fetch("./strategy-study.json");
   if (!response.ok) throw new Error("Thiếu kết quả mô phỏng");
   const study = await response.json();
+  const holding = document.getElementById("study-holding");
+  for (const scenario of study.scenarios) {
+    holding.add(new Option(scenario.holdingSessions + " phiên", scenario.holdingSessions));
+  }
+  holding.value = "10";
   document.getElementById("study-status").textContent =
-    "Mẫu lưu đến " + study.sampleEnd + " · Giữ tối đa " + study.holdingSessions
-    + " phiên · Chi phí giả định " + fmt.format(study.costPct) + "% cho cả lượt mua bán.";
-  metrics("study-metrics", [
-    ["Số điểm vào dùng chung", study.fixed.observations],
-    ["Giữ đủ số phiên · lợi nhuận ròng bình quân", fmt.format(study.fixed.average_net_pct) + "%"],
-    ["Thoát sớm theo MA50 · lợi nhuận ròng bình quân", fmt.format(study.early.average_net_pct) + "%"],
-    ["Thoát sớm theo MA50 · lượt tệ nhất", fmt.format(study.early.worst_trade_pct) + "%"]
-  ]);
+    "Mẫu lưu đến " + study.sampleEnd + " · Chi phí giả định "
+    + fmt.format(study.costPct) + "% cho cả lượt mua bán.";
+  function renderStudy() {
+    const {fixed, early} = study.scenarios.find(item => item.holdingSessions === Number(holding.value));
+    document.getElementById("study-metrics").replaceChildren();
+    metrics("study-metrics", [
+      ["Số điểm vào dùng chung", fixed.observations],
+      ["Giữ đủ số phiên · lợi nhuận ròng bình quân", fmt.format(fixed.average_net_pct) + "%"],
+      ["Thoát sớm theo MA50 · lợi nhuận ròng bình quân", fmt.format(early.average_net_pct) + "%"],
+      ["Thoát sớm theo MA50 · lượt tệ nhất", fmt.format(early.worst_trade_pct) + "%"]
+    ]);
+  }
+  holding.onchange = renderStudy;
+  renderStudy();
+  holding.disabled = false;
 }
 showStudy().catch(() => {
   document.getElementById("study-status").textContent = "Chưa tải được kết quả mô phỏng.";

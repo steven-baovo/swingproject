@@ -1,32 +1,96 @@
 {
   "sampleEnd": "2026-11-06",
-  "holdingSessions": 10,
   "costPct": 0.5,
-  "fixed": {
-    "observations": 117,
-    "early_exits": 0,
-    "average_net_pct": -1.324,
-    "median_net_pct": -2.194,
-    "positive_net_pct": 34.19,
-    "average_win_pct": 5.017,
-    "average_loss_pct": -4.618,
-    "worst_trade_pct": -16.519,
-    "profit_factor": 0.564,
-    "average_excess_vs_index_pp": -0.31
-  },
-  "early": {
-    "observations": 117,
-    "early_exits": 45,
-    "average_net_pct": -1.086,
-    "median_net_pct": -2.171,
-    "positive_net_pct": 30.77,
-    "average_win_pct": 5.335,
-    "average_loss_pct": -3.939,
-    "worst_trade_pct": -17.733,
-    "profit_factor": 0.602,
-    "average_excess_vs_index_pp": -0.428,
-    "average_change_vs_fixed_exit_pp": 0.238,
-    "better_than_fixed_exit": 24,
-    "worse_than_fixed_exit": 21
-  }
+  "scenarios": [
+    {
+      "holdingSessions": 5,
+      "fixed": {
+        "observations": 196,
+        "early_exits": 0,
+        "average_net_pct": -0.88,
+        "median_net_pct": -1.188,
+        "positive_net_pct": 35.71,
+        "average_win_pct": 3.012,
+        "average_loss_pct": -3.042,
+        "worst_trade_pct": -10.935,
+        "profit_factor": 0.55,
+        "average_excess_vs_index_pp": -0.183
+      },
+      "early": {
+        "observations": 196,
+        "early_exits": 46,
+        "average_net_pct": -0.864,
+        "median_net_pct": -1.317,
+        "positive_net_pct": 33.67,
+        "average_win_pct": 3.111,
+        "average_loss_pct": -2.882,
+        "worst_trade_pct": -10.935,
+        "profit_factor": 0.548,
+        "average_excess_vs_index_pp": -0.282,
+        "average_change_vs_fixed_exit_pp": 0.017,
+        "better_than_fixed_exit": 26,
+        "worse_than_fixed_exit": 19
+      }
+    },
+    {
+      "holdingSessions": 10,
+      "fixed": {
+        "observations": 117,
+        "early_exits": 0,
+        "average_net_pct": -1.324,
+        "median_net_pct": -2.194,
+        "positive_net_pct": 34.19,
+        "average_win_pct": 5.017,
+        "average_loss_pct": -4.618,
+        "worst_trade_pct": -16.519,
+        "profit_factor": 0.564,
+        "average_excess_vs_index_pp": -0.31
+      },
+      "early": {
+        "observations": 117,
+        "early_exits": 45,
+        "average_net_pct": -1.086,
+        "median_net_pct": -2.171,
+        "positive_net_pct": 30.77,
+        "average_win_pct": 5.335,
+        "average_loss_pct": -3.939,
+        "worst_trade_pct": -17.733,
+        "profit_factor": 0.602,
+        "average_excess_vs_index_pp": -0.428,
+        "average_change_vs_fixed_exit_pp": 0.238,
+        "better_than_fixed_exit": 24,
+        "worse_than_fixed_exit": 21
+      }
+    },
+    {
+      "holdingSessions": 20,
+      "fixed": {
+        "observations": 78,
+        "early_exits": 0,
+        "average_net_pct": -2.548,
+        "median_net_pct": -3.809,
+        "positive_net_pct": 32.05,
+        "average_win_pct": 5.587,
+        "average_loss_pct": -6.385,
+        "worst_trade_pct": -16.274,
+        "profit_factor": 0.413,
+        "average_excess_vs_index_pp": -0.611
+      },
+      "early": {
+        "observations": 78,
+        "early_exits": 50,
+        "average_net_pct": -1.858,
+        "median_net_pct": -2.779,
+        "positive_net_pct": 23.08,
+        "average_win_pct": 6.967,
+        "average_loss_pct": -4.505,
+        "worst_trade_pct": -16.002,
+        "profit_factor": 0.464,
+        "average_excess_vs_index_pp": -0.682,
+        "average_change_vs_fixed_exit_pp": 0.69,
+        "better_than_fixed_exit": 28,
+        "worse_than_fixed_exit": 21
+      }
+    }
+  ]
 }
