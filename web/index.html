@@ -74,6 +74,12 @@
 <ul id="news-list"></ul>
 <small>Chủ đề được gợi ý theo từ khóa trong tiêu đề. Mức ảnh hưởng cần được rà soát từ bài gốc.</small>
 </article>
+<article style="margin-top:20px">
+<h2>Kiểm tra bộ lọc trên dữ liệu lịch sử</h2>
+<p id="study-status" role="status">Đang tải kết quả mô phỏng…</p>
+<dl id="study-metrics"></dl>
+<p><small>Mẫu áp thành phần VN30 hiện tại về quá khứ. Giá chưa được đối soát điều chỉnh cổ tức và chia tách. Mô phỏng chưa xét thanh khoản, tỷ trọng vốn hay phân tích cơ bản.</small></p>
+</article>
 <footer><small>Nguồn giá Entrade. Phiếu mẫu sử dụng dữ liệu lịch sử và bộ lọc thử nghiệm.</small></footer>
 </main>
 <script>
@@ -331,6 +337,23 @@ async function showNews() {
 }
 showNews().catch(() => {
   document.getElementById("news-status").textContent = "Chưa tải được bản tin.";
+});
+async function showStudy() {
+  const response = await fetch("./strategy-study.json");
+  if (!response.ok) throw new Error("Thiếu kết quả mô phỏng");
+  const study = await response.json();
+  document.getElementById("study-status").textContent =
+    "Mẫu lưu đến " + study.sampleEnd + " · Giữ tối đa " + study.holdingSessions
+    + " phiên · Chi phí giả định " + fmt.format(study.costPct) + "% cho cả lượt mua bán.";
+  metrics("study-metrics", [
+    ["Số điểm vào dùng chung", study.fixed.observations],
+    ["Giữ đủ số phiên · lợi nhuận ròng bình quân", fmt.format(study.fixed.average_net_pct) + "%"],
+    ["Thoát sớm theo MA50 · lợi nhuận ròng bình quân", fmt.format(study.early.average_net_pct) + "%"],
+    ["Thoát sớm theo MA50 · lượt tệ nhất", fmt.format(study.early.worst_trade_pct) + "%"]
+  ]);
+}
+showStudy().catch(() => {
+  document.getElementById("study-status").textContent = "Chưa tải được kết quả mô phỏng.";
 });
 </script>
 </body>

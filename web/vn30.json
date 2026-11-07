@@ -21969,6 +21969,184 @@
   ],
   "membershipScope": "current snapshot; historical membership not verified",
   "fundamentals": {
+    "VIC": {
+      "company": "Tập đoàn Vingroup",
+      "sector": "Tập đoàn đa ngành",
+      "period": "9 tháng/2026",
+      "publishedAt": "2026-10-30",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://owa.hnx.vn/ftp/cims/2026/10_W5/000000017005688_VI_BaoCaoTaiChinh_Q3_2026.pdf",
+      "facts": [
+        {
+          "label": "Doanh thu thuần hợp nhất 9 tháng",
+          "value": "Khoảng 372.499 tỷ đồng"
+        },
+        {
+          "label": "Lợi nhuận sau thuế hợp nhất 9 tháng",
+          "value": "Khoảng 43.665 tỷ đồng"
+        },
+        {
+          "label": "Dòng tiền thuần từ hoạt động kinh doanh 9 tháng",
+          "value": "Khoảng 156.529 tỷ đồng"
+        },
+        {
+          "label": "Chi phí lãi vay ghi nhận 9 tháng",
+          "value": "Khoảng 28.830 tỷ đồng"
+        }
+      ],
+      "assessment": "Số liệu trích từ báo cáo hợp nhất. Cần xem biến động vốn lưu động và dòng tiền theo mảng để hiểu khả năng duy trì dòng tiền kinh doanh.",
+      "missing": [
+        "Tiền có thể sử dụng, nợ và nghĩa vụ đáo hạn",
+        "Dòng tiền đầu tư và nghĩa vụ tài trợ theo mảng",
+        "Đối chiếu thuyết minh các chỉ tiêu đã trình bày lại"
+      ]
+    },
+    "VJC": {
+      "company": "Hàng không Vietjet",
+      "sector": "Hàng không",
+      "period": "Quý III và 9 tháng/2026",
+      "publishedAt": "2026-10-30",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://financialfilings.com/filings/cong-ty-co-phan-hang-khong-vietjet/earnings-release/2026/75314489/",
+      "facts": [
+        {
+          "label": "Doanh thu hợp nhất 9 tháng",
+          "value": "74.385 tỷ đồng (+41% cùng kỳ)"
+        },
+        {
+          "label": "Lợi nhuận sau thuế hợp nhất 9 tháng",
+          "value": "1.721 tỷ đồng (+7% cùng kỳ)"
+        },
+        {
+          "label": "Nợ vay ròng trên vốn chủ sở hữu cuối quý III",
+          "value": "2,4 lần theo giải trình"
+        }
+      ],
+      "assessment": "Doanh thu tăng nhanh hơn lợi nhuận theo bản sao giải trình của doanh nghiệp. Cần tách đóng góp của vận tải và các giao dịch tàu bay để đánh giá chất lượng lợi nhuận.",
+      "missing": [
+        "Đối chiếu bản công bố trên cổng nhà đầu tư của Vietjet",
+        "Dòng tiền từ vận tải và giao dịch tàu bay",
+        "Nợ đáo hạn, nghĩa vụ thuê và độ nhạy với giá nhiên liệu"
+      ]
+    },
+    "VRE": {
+      "company": "Vincom Retail",
+      "sector": "Bất động sản bán lẻ",
+      "period": "Quý III và 9 tháng/2026",
+      "publishedAt": "2026-10-29",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://ir.vincom.com.vn/vincom-retail-cong-bo-ket-qua-kinh-doanh-quy-3-va-chinh-thuc-khai-truong-tttm-vincom-plaza-dan-phuong/",
+      "facts": [
+        {
+          "label": "Doanh thu thuần hợp nhất 9 tháng",
+          "value": "7.041 tỷ đồng (+7,9% cùng kỳ)"
+        },
+        {
+          "label": "Lợi nhuận sau thuế 9 tháng",
+          "value": "4.737 tỷ đồng (+25,1% cùng kỳ)"
+        },
+        {
+          "label": "Doanh thu cho thuê và dịch vụ liên quan quý III",
+          "value": "2.285 tỷ đồng (+7,6% cùng kỳ)"
+        }
+      ],
+      "assessment": "Doanh thu ở đây là số hợp nhất công bố theo VAS. Chỉ tiêu doanh thu điều chỉnh dùng để so với kế hoạch có thêm phần doanh thu giả định từ một giao dịch chuyển nhượng.",
+      "missing": [
+        "Tách lợi nhuận từ hoạt động cho thuê và chuyển nhượng",
+        "Dòng tiền hoạt động, nợ vay và chi đầu tư",
+        "Tỷ lệ lấp đầy toàn hệ thống qua các quý"
+      ]
+    },
+    "BSR": {
+      "company": "Lọc hóa dầu Bình Sơn",
+      "sector": "Lọc hóa dầu",
+      "period": "Quý III/2026",
+      "publishedAt": "2026-10-30",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://staticfile.hsx.vn/Uploads/UploadDocuments/2510048/20261030%20-%20BSR%20-%20Giai%20trinh%20loi%20nhuan%20sau%20thue%20Quy%203%20nam%202026.pdf",
+      "facts": [
+        {
+          "label": "Lợi nhuận sau thuế hợp nhất quý III",
+          "value": "8.969 tỷ đồng"
+        },
+        {
+          "label": "Dated Brent bình quân quý III",
+          "value": "97 USD/thùng (+27,93 USD/thùng cùng kỳ)"
+        }
+      ],
+      "assessment": "BSR giải trình rằng chênh lệch giữa giá sản phẩm và giá dầu thô mở rộng là nguyên nhân chính giúp kết quả quý III tăng. Cần xem mức lợi nhuận qua nhiều chu kỳ giá dầu.",
+      "missing": [
+        "Dòng tiền kinh doanh và ảnh hưởng của hàng tồn kho",
+        "Nợ vay và nhu cầu vốn cho dự án mở rộng",
+        "Đối chiếu báo cáo hợp nhất đầy đủ"
+      ]
+    },
+    "ACB": {
+      "company": "Ngân hàng Á Châu",
+      "sector": "Ngân hàng",
+      "period": "Quý III và 9 tháng/2026",
+      "publishedAt": "2026-10-27",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://acb.com.vn/ve-chung-toi/kqkd-acb-9-thang-2026-tin-dung-tang-115-fitchratings-nang-xep-hang-tin-nhiem-len-bb-trien-vong-on-dinh",
+      "facts": [
+        {
+          "label": "Lợi nhuận trước thuế 9 tháng",
+          "value": "Trên 16.600 tỷ đồng"
+        },
+        {
+          "label": "Tăng trưởng cho vay khách hàng từ đầu năm",
+          "value": "Khoảng 11,5%"
+        },
+        {
+          "label": "Tỷ lệ nợ xấu bao gồm CIC cuối quý III",
+          "value": "1,18% theo công bố"
+        },
+        {
+          "label": "Tỷ lệ an toàn vốn hợp nhất cuối quý III",
+          "value": "Khoảng 12% theo công bố"
+        }
+      ],
+      "assessment": "Công bố cho thấy tín dụng mở rộng và ghi nhận áp lực nợ xấu từ CIC trong quý III. Cần đọc cùng số liệu dự phòng và nợ nhóm 2.",
+      "missing": [
+        "Đối chiếu báo cáo tài chính hợp nhất",
+        "Diễn biến nợ nhóm 2, dự phòng và bao phủ nợ xấu",
+        "Biên lãi ròng và định giá"
+      ]
+    },
+    "GAS": {
+      "company": "PV GAS",
+      "sector": "Khí và năng lượng",
+      "period": "6 tháng/2026",
+      "publishedAt": "2026-08-24",
+      "reviewedAt": "2026-11-07",
+      "status": "partial",
+      "source": "https://www.pvgas.com.vn/tin-tuc/pv-gas-6-thang-dau-nam-2026-hoan-thanh-ke-hoach-loi-nhuan-va-nop-ngan-sach-cho-ca-nam-duy-tri-nguon-cung-khi-dam-bao-an-ninh-nang-luong-quoc-gia",
+      "facts": [
+        {
+          "label": "Doanh thu hợp nhất bán niên",
+          "value": "Trên 82 nghìn tỷ đồng"
+        },
+        {
+          "label": "Lợi nhuận trước thuế bán niên",
+          "value": "Trên 11,2 nghìn tỷ đồng"
+        },
+        {
+          "label": "Lợi nhuận sau thuế bán niên",
+          "value": "Trên 9 nghìn tỷ đồng"
+        }
+      ],
+      "assessment": "Số liệu bán niên theo tóm tắt của doanh nghiệp về báo cáo hợp nhất đã soát xét. Cần cập nhật quý III trước khi đánh giá diễn biến gần nhất.",
+      "missing": [
+        "Đối chiếu báo cáo hợp nhất quý III/2026",
+        "Dòng tiền kinh doanh, chi đầu tư và nợ vay",
+        "Biên lợi nhuận theo mảng"
+      ]
+    },
     "TCB": {
       "company": "Techcombank",
       "sector": "Ngân hàng",

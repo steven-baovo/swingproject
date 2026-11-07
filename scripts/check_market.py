@@ -3,6 +3,7 @@ import datetime as dt
 import json
 import math
 import pathlib
+import re
 import subprocess
 import time
 import urllib.parse
@@ -21,7 +22,9 @@ def main():
     OUTPUT.mkdir(parents=True, exist_ok=True)
     members = fetch("https://iboard-query.ssi.com.vn/stock/group/VN30")["data"]
     symbols = [row["stockSymbol"] for row in members]
-    if len(symbols) != 30 or len(set(symbols)) != 30:
+    if (len(symbols) != 30 or len(set(symbols)) != 30
+            or any(not isinstance(symbol, str) or not re.fullmatch(r"[A-Z0-9]{3}", symbol)
+                   for symbol in symbols)):
         raise ValueError("Expected 30 unique VN30 members")
     now = int(time.time())
     summary = {
@@ -30,6 +33,7 @@ def main():
         "membershipScope": "current snapshot; historical membership not verified",
         "results": [],
     }
+    snapshots = {}
     for symbol in symbols + ["VNINDEX"]:
         kind = "index" if symbol == "VNINDEX" else "stock"
         query = urllib.parse.urlencode(dict(symbol=symbol, resolution="1D",
@@ -51,17 +55,28 @@ def main():
                         <= max(data["o"][i], data["c"][i]) <= data["h"][i]
                         and data["v"][i] >= 0):
                     raise ValueError("Invalid OHLCV")
-            (OUTPUT / f"{symbol}.json").write_text(json.dumps(data))
+            snapshots[symbol] = data
             summary["results"].append(dict(symbol=symbol, sessions=len(dates),
                                             lastTimestamp=dates[-1], status="ok"))
         except (ValueError, KeyError, subprocess.CalledProcessError) as error:
             summary["results"].append(dict(symbol=symbol, status="error",
                                             error=type(error).__name__))
         time.sleep(0.2)
-    (OUTPUT / "coverage.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary, indent=2))
     if any(row["status"] != "ok" for row in summary["results"]):
         raise RuntimeError("Incomplete download; preserve the published report")
+    benchmark_dates = snapshots["VNINDEX"]["t"]
+    if any(bars["t"] != benchmark_dates for bars in snapshots.values()):
+        raise RuntimeError("Trading sessions do not align; keep the previous snapshot")
+    for symbol, data in snapshots.items():
+        destination = OUTPUT / f"{symbol}.json"
+        temporary = destination.with_suffix(".tmp")
+        temporary.write_text(json.dumps(data))
+        temporary.replace(destination)
+    coverage = OUTPUT / "coverage.json"
+    temporary = coverage.with_suffix(".tmp")
+    temporary.write_text(json.dumps(summary, indent=2))
+    temporary.replace(coverage)
 
 if __name__ == "__main__":
     main()
